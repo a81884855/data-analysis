@@ -1,5 +1,4 @@
 import React from 'react';
-import Papa from 'papaparse';
 
 class FileReader extends React.Component {
   constructor(props) {
@@ -8,25 +7,6 @@ class FileReader extends React.Component {
       csvfile: undefined
     };
   }
-
-  handleChange = event => {
-    this.setState({
-      csvfile: event.target.files[0]
-    });
-  };
-
-  importCSV = () => {
-    const { csvfile } = this.state;
-    Papa.parse(csvfile, {
-      complete: this.props.updateData,
-      header: true
-    });
-  };
-
-  // updateData(result) {
-  //   var data = result.data;
-  //   console.log(data);
-  // }
 
   render() {
     return (
@@ -40,10 +20,10 @@ class FileReader extends React.Component {
           }}
           name="file"
           placeholder={null}
-          onChange={this.handleChange}
+          onChange={this.props.handleChange}
         />
         <p />
-        <button onClick={this.importCSV}> Upload now!</button>
+        <button onClick={this.props.importCSV}> Upload now!</button>
       </div>
     );
   }

@@ -53,9 +53,8 @@ class Board extends React.Component{
         let size = category[1];
         groupSize += size;
         tempGroup.push(category);
-  
         if(groupSize > 0.15 * totalSize / (1-index*0.04) || 
-            tempGroup.length > 2 || index === categories.length-1){
+          tempGroup.length > 2 || index === categories.length-1){
           categoryGroup.push([tempGroup, groupSize/totalSize]);
           tempGroup = [];
           groupSize = 0;
@@ -96,8 +95,7 @@ class Board extends React.Component{
             <Diagram 
               index={index}
               width={landscape ? tempW * company[1] / (totalSize * group[1]) : tempW}
-              height={landscape ? tempH - 22: tempH * company[1] / (totalSize * group[1]) -22}
-              totalSize={totalSize*group[1]}
+              height={landscape ? tempH - 23: tempH * company[1] / (totalSize * group[1]) -23}
               categorySize={categories}
               groups={groups[company[0]]}
               landscape={landscape}

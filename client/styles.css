@@ -1,4 +1,8 @@
-body {
+@import url(https://fonts.googleapis.com/css?family=Roboto:300);
+body { 
+  font-family: 'Roboto', sans-serif; 
+  color: black; 
+  background: #FAFAFA;
   margin: 0 0 0 0;
 }
 
@@ -25,6 +29,10 @@ body {
   height: 100vh;
 }
 
+.fiveToSeven{
+  width: 25%;
+}
+
 .residual{
   width: 25%;
   height: 100vh;
@@ -35,7 +43,65 @@ h4.catogeryId{
   height: 20px;
   margin: 0 1px 1px 1px;
   vertical-align: 'text-top';
-  color: white;
+  color: whitesmoke;
   background: #303030;
   position: relative;
+}
+
+.company {
+  display: inline-block;
+  /* background: yellow; */
+  border: 1px white solid;
+  position: relative;
+  border-radius: 5%;
+  /* -webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+	-moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+	box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset; */
+}
+
+/* Tooltip text */
+.company .tooltiptext {
+  visibility: hidden;
+  width: 150px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  /* padding: 5px 0; */
+  border-radius: 6px;
+
+  /* Position the tooltip text */
+  position: absolute;
+  z-index: 1;
+  bottom: 25%;
+  left: 90%;
+  margin-left: -60px;
+
+  /* Fade in tooltip */
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+/* Tooltip arrow */
+.company .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.company:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+div.cell{
+  background: whitesmoke;
+  border: 1px white solid;
+  position: absolute;
+
 }

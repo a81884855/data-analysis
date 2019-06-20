@@ -11,7 +11,6 @@ body {
 }
 
 .board{
-  background: orange;
   text-align: center;
   display: inline-block;
   width: 100%;
@@ -103,5 +102,8 @@ div.cell{
   background: whitesmoke;
   border: 1px white solid;
   position: absolute;
+}
 
+input.csv-input{
+  margin: 0 0 0 100px;
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import Papa from 'papaparse';
 
 import FileReader from './FileReader';
-import Diagram from './Diagram';
+import Board from './Board';
 
 class App extends React.Component{
   constructor() {
@@ -24,6 +24,7 @@ class App extends React.Component{
     let categorySize = [];
     let group = {};
     let totalSize = 0;
+    let categoryGroup = [];
     // Filter data by category_id
     data.forEach((row)=>{
       let { category_id, company_id, amount } = row;
@@ -40,7 +41,7 @@ class App extends React.Component{
       for(let company in categories[category]){
         companies.push([company, categories[category][company]])
       }
-      companies = companies.sort((a,b) => b[1] - a[1]).slice(0,30);
+      companies = companies.sort((a,b) => b[1] - a[1]).slice(0,33);
       categories[category]=companies
     }
 
@@ -56,6 +57,8 @@ class App extends React.Component{
 
     categorySize.sort((a,b)=> b[1]-a[1])
 
+    let groupSize = 0;
+    let tempGroup = [];
     // create groups for each category
     for(let category of categorySize){
       let cat = categories[category[0]];
@@ -63,15 +66,24 @@ class App extends React.Component{
       let accum = 0;
       let temp = [];
       let percentage = 0.12;
+      groupSize += size;
+      tempGroup.push(category);
+
+      if(groupSize > 0.15 * totalSize){
+        categoryGroup.push([tempGroup, groupSize/totalSize]);
+        tempGroup = [];
+        groupSize = 0;
+      }
+
       for(let company of cat){
         accum += company[1]
-        temp.push(company)
+        temp.push(company);
         if(accum > size * percentage || temp.length > 3){
           group[category[0]] = group[category[0]] ? group[category[0]] : []
           group[category[0]].push([temp, accum/size]);
           accum = 0
           temp = [];
-          percentage *= 0.90
+          percentage *= 0.88
         }
       }
     }
@@ -101,68 +113,22 @@ class App extends React.Component{
 
   render() {
     const { categorySize, categories, group, totalSize } = this.state;
-    let topTwototalSize = 0;
-    let threeToFiveTotalSize = 0;
-    categorySize.slice(0,2).map((category)=> topTwototalSize+=category[1]);
-    categorySize.slice(2,5).map((category)=> threeToFiveTotalSize+=category[1])
-    
-    let residualSize = totalSize - topTwototalSize - threeToFiveTotalSize;
-
-    const topTwo = categorySize.slice(0,2).map((category, index)=>
-      <Diagram 
+    const board = categorySize.slice(0,1).map((index)=>
+      <Board 
         key={index}
-        index={index}
-        groupName={category[0]}
-        totalSize={topTwototalSize}
-        categorySize={categorySize}
-        groups={group[category[0]]}
+        categories={categorySize}
+        totalSize={totalSize}
+        groups={group}
       />
-    );
-
-    const threeToFive = categorySize.slice(2,5).map((category, index)=>
-    <Diagram 
-      key={index}
-      index={index+1}
-      groupName={category[0]}
-      totalSize={threeToFiveTotalSize}
-      categorySize={categorySize}
-      groups={group[category[0]]}
-    />
-    );
-
-    const residual = categorySize.slice(5).map(
-      function(category,index){
-        residualSize -= category[1]
-        if(residualSize < 0.2 * totalSize) return
-
-        return <Diagram  
-          key={index}
-          index={index+1}
-          groupName={category[0]}
-          totalSize={threeToFiveTotalSize}
-          categorySize={categorySize}
-          groups={group[category[0]]}
-        />
-      }
-    );
+    )
 
     return (
-      <div className="App">
+      <div className="App" style={{maxWidth: '100vw', maxHeight: '100vh'}}>
         <FileReader 
           updateData={this.updateData}
           handleChange={this.handleChange}
           importCSV={this.importCSV}/>
-        <div className="Diagram">
-          <div className="topTwo">
-            {topTwo}
-          </div>
-          <div className="threeToFive">
-            {threeToFive}
-          </div>
-          <div className="residual">
-            {residual}
-          </div>
-        </div>
+        {board}
       </div>
     );
   }

@@ -10,38 +10,12 @@ class Diagram extends React.Component{
     }
   }
 
-  saveRef = (ref) => this.containerNode = ref
-
-  measure() {
-    const {clientWidth, clientHeight} = this.containerNode
-
-    this.setState({
-      width: clientWidth ,
-      height: clientHeight - 22,
-    })
-  }
-
-  componentDidMount() {
-    this.measure()
-  }
-
-  componentDidUpdate() {
-    this.measure()
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return (
-      this.state.width !== nextState.width ||
-      this.state.height !== nextState.height
-    )
-  }
-
   render(){
-    const { totalSize, groupName, groups, index, categorySize } = this.props;
-    const {width, height} = this.state;
+    const { groupName, groups, index, width, height } = this.props;
+
     let currWidth = width;
     let currHeight = height;
-    const h = 100 * categorySize[index][1] / totalSize;
+
     const variable = 0.80 - (0.042 * index)
     const cells = groups.map(
       function(company, i) {
@@ -55,7 +29,7 @@ class Diagram extends React.Component{
         } else {
           if (currWidth > currHeight){
             tempW = width * company[1] * height / currHeight / variable;
-            if(tempW > currHeight){
+            if(tempW > currWidth || currWidth - tempW < 20){
               tempH = currHeight;
               tempW = currWidth;
               stop=true;
@@ -64,7 +38,7 @@ class Diagram extends React.Component{
             }
           } else {
             tempH = height * company[1] * height / currWidth / variable;
-            if(tempH > currHeight){
+            if(tempH > currHeight || currHeight - tempH < 20){
               tempH = currHeight;
               tempW = currWidth;
               stop=true;
@@ -82,15 +56,17 @@ class Diagram extends React.Component{
           key={i}
         />
       })
+
     const boardStyle={
-      height: h.toString()+"vh"
+      height: height,
+      width: width,
+      
     }
+
     return(
       <div 
-        ref={this.saveRef}
         style={boardStyle} 
         className="board">
-        <h4 className="catogeryId">{groupName}</h4>
         <div>
           {cells}
         </div>

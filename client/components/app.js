@@ -1,6 +1,6 @@
 import React from 'react';
 import Papa from 'papaparse';
-
+import axios from 'axios';
 import FileReader from './FileReader';
 import Board from './Board';
 
@@ -16,6 +16,7 @@ class App extends React.Component{
     this.updateData = this.updateData.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.importCSV = this.importCSV.bind(this);
+    this.demo = this.demo.bind(this);
   }
 
   updateData(result) {
@@ -110,6 +111,14 @@ class App extends React.Component{
     });
   };
 
+  demo(){
+    axios.get('/test_data.csv')
+      .then((demo)=>
+        this.setState({
+          csvfile: demo.data
+        }, ()=> this.importCSV())
+      )
+  }
 
   render() {
     const { categorySize, categories, group, totalSize } = this.state;
@@ -127,7 +136,9 @@ class App extends React.Component{
         <FileReader 
           updateData={this.updateData}
           handleChange={this.handleChange}
-          importCSV={this.importCSV}/>
+          importCSV={this.importCSV}
+          demo={this.demo}
+          />
         {board}
       </div>
     );

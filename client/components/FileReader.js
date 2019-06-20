@@ -1,4 +1,6 @@
 import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 
 class FileReader extends React.Component {
   constructor(props) {
@@ -8,20 +10,27 @@ class FileReader extends React.Component {
     };
   }
 
-  clickHandler(e){
+  clickHandler(){
     this.setState({
       display: false
     })
     this.props.importCSV()
   }
 
+  demoClick(){
+    this.setState({
+      display: false
+    })
+    this.props.demo()
+  }
   render() {
     const { display } = this.state;
 
     const fileReaderStyle={
       display: display ? 'null' : 'none',
       textAlign: 'center',
-      marginTop: '15vh'
+      marginTop: '20vh',
+      fontSize: '1.5vw',
     }
     return (
       <div className="fileReader" style={fileReaderStyle}>
@@ -37,7 +46,10 @@ class FileReader extends React.Component {
           onChange={this.props.handleChange}
         />
         <p />
-        <button onClick={this.clickHandler.bind(this)}> Upload now!</button>
+        <Button variant="contained" component="span" onClick={this.clickHandler.bind(this)}>Upload now!</Button>
+        <div style={{ marginTop: '20vh'}}>
+          <Button variant="contained" color="primary" onClick={this.demoClick.bind(this)}>See Demo!</Button>
+        </div>
       </div>
     );
   }

@@ -11,7 +11,7 @@ class Diagram extends React.Component{
   }
 
   render(){
-    const { groupName, groups, index, width, height } = this.props;
+    const { groups, index, width, height } = this.props;
 
     let currWidth = width;
     let currHeight = height;

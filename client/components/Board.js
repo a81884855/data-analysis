@@ -39,8 +39,8 @@ class Board extends React.Component{
   render(){
     const { width, height } = this.state;
     const { categories, groups } = this.props;
-    let currWidth = width;
-    let currHeight = height;
+    let currWidth = width - 2;
+    let currHeight = height - 2;
     let top = 0
     let left = 0
     const categoryGroup = [];

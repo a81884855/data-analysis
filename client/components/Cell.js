@@ -1,5 +1,6 @@
 import React from 'react';
 import colorGenerate from '../../helper/colorGenerate';
+import { Textfit } from 'react-textfit';
 
 const Cell = props => {
   const { size, curr, boardSize, data } = props
@@ -19,17 +20,10 @@ const Cell = props => {
         height: cellHeight > cellWidth ? cellHeight/companies.length -2 : cellHeight - 2,
         background: colorGenerate(),
       }}>
-        <p style={{
-          marginTop: cellWidth > cellHeight? (0.0025*cellWidth).toString() + 'vw' : (0.02*cellHeight).toString() + 'vh',
-          fontSize: cellWidth > cellHeight? (0.0055*cellWidth).toString() + 'vw' : (0.015*cellHeight).toString() + 'vh',
-          margin: 0,
-          display: 'inline-block',
-          whiteSpace: 'nowrap',
-          overflow: 'hidden',
-          textOverflow: 'ellipsis',
-          }}>
-          {company[0]}
-        </p>
+          <Textfit>
+            {company[0]}
+
+          </Textfit>
         <span className="tooltiptext">{company[1]}</span>
     </div>  
   )
